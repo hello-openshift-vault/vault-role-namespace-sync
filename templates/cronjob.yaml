@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: sync
-            image: registry.redhat.io/openshift4/ose-cli:v4.10
+            image: "{{ .Values.cronJob.image }}"
             imagePullPolicy: Always
             command:
             - /bin/sh
