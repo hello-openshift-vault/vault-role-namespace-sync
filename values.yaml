@@ -1,4 +1,10 @@
+# This can be a service (if running against the local cluster) or the URL of a
+# remote cluster API. The script will log into this API with the token of the
+# service account that's running the script. Make sure that the service account
+# has "list" for "namespace" cluster resources.
 kubernetesAPI: https://kubernetes.svc
+
+# Cluster name should match the auth engine, secret engine, and policy in Vault.
 clusterName: dev
 # TODO: This might be a nice to have feature
 # excludeOpenShift: true
@@ -9,4 +15,4 @@ cronJob:
   schedule: "*/1 * * * *"
   script: |
     #!/bin/bash
-    echo "Hello test!"
+    oc get namespaces
