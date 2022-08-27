@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: vault-role-namespace-sync
+  name: {{ .Values.cronJob.name }}
 spec:
   schedule: "{{ .Values.cronJob.schedule }}"
   jobTemplate:
@@ -13,16 +13,16 @@ spec:
             image: "{{ .Values.cronJob.image }}"
             imagePullPolicy: Always
             command:
-            - /bin/sh
-            - -c
-            - /tmp/scripts/vault-role-namespace-sync.sh
+            - "/bin/sh"
+            - "-c"
+            - "/tmp/scripts/{{ .Values.cronJob.name }}.sh"
             volumeMounts:
-            - name: vault-role-namespace-sync
-              mountPath: /tmp/scripts/vault-role-namespace-sync.sh
-              subPath: vault-role-namespace-sync.sh
+            - name: {{ .Values.cronJob.name }}
+              mountPath: "/tmp/scripts/{{ .Values.cronJob.name}}.sh"
+              subPath: "{{ .Values.cronJob.name}}.sh"
           restartPolicy: OnFailure
           volumes:
-          - name: vault-role-namespace-sync
+          - name: {{ .Values.cronJob.name }}
             configMap:
-              name: vault-role-namespace-sync
+              name: {{ .Values.cronJob.name }}
               defaultMode: 0755

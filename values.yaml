@@ -6,3 +6,4 @@ clusterName: dev
 cronJob:
   image: registry.redhat.io/openshift4/ose-cli:v4.10
   schedule: "*/1 * * * *"
+  name: "vault-role-namespace-sync"
