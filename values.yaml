@@ -29,10 +29,14 @@ clusterName: dev
 # TODO: This might be a nice to have feature
 # excludeOpenShift: true
 
+# Leave this section alone unless you need to customize the script
 cronJob:
   image: registry.redhat.io/openshift4/ose-cli:v4.10
   name: vault-role-namespace-sync
   schedule: "*/1 * * * *"
   script: |
     #!/bin/bash
-    oc get namespaces
+    NAMESPACES=$(oc get namespaces -o name)
+    for NAMESPACE in $NAMESPACES ; do
+        echo "$NAMESPACE"
+    done
