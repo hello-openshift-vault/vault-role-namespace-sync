@@ -1,0 +1,4 @@
+kubernetesAPI: https://kubernetes.svc
+clusterName: dev
+# TODO: This might be a nice to have feature
+# excludeOpenShift: true
