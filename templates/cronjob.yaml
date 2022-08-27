@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: vault-role-namespace-sync
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "{{ .Values.cronJob.schedule }}"
   jobTemplate:
     spec:
       template:
