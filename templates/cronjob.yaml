@@ -1,0 +1,26 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: vault-role-namespace-sync
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: sync
+            image: registry.redhat.io/openshift4/ose-cli:v4.10
+            imagePullPolicy: Always
+            command:
+            - /bin/sh
+            - -c
+            - /tmp/scripts/vault-role-namespace-sync.sh
+            volumeMounts:
+            - name: vault-role-namespace-sync-script
+              mountPath: /tmp/scripts
+          restartPolicy: OnFailure
+          volumes:
+          - name: vault-role-namespace-sync-script
+            configMap:
+              name: vauilt-role-namespace-sync-script
