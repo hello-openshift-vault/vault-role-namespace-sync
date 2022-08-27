@@ -1,0 +1,13 @@
+{{ if .Values.kubernetes.createRole }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: list-namespaces
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - namespaces
+    verbs:
+      - list
+{{ end }}

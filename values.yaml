@@ -1,8 +1,28 @@
-# This can be a service (if running against the local cluster) or the URL of a
-# remote cluster API. The script will log into this API with the token of the
-# service account that's running the script. Make sure that the service account
-# has "list" for "namespace" cluster resources.
-kubernetesAPI: https://kubernetes.svc
+kubernetes:
+  # apiUrl can be a service (if running against the local cluster) or the URL
+  # of a remote cluster API. The script will log into this API with the token
+  # of the service account that's running the script. Make sure that the
+  # service account has "list" for "namespace" cluster resources.
+  apiUrl: https://kubernetes.svc
+
+  # Set token if running outside of the cluster. If token is not set, the
+  # token for the service account running the job will be used.
+  token: ""
+
+  # Create a ClusterRole for "list" on "namespaces" and bind to the "default"
+  # service account under the "vault-server" namespace.
+  createRole: true
+
+vault:
+  # Vault API token that has permissions to create roles under the given auth
+  # engine.
+  token: ""
+
+  # Vault Auth engine name to create roles under
+  authEngineName: dev
+
+  # Vault policy to attach to roles
+  policyName: dev
 
 # Cluster name should match the auth engine, secret engine, and policy in Vault.
 clusterName: dev
