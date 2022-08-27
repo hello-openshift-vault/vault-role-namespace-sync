@@ -17,10 +17,12 @@ spec:
             - -c
             - /tmp/scripts/vault-role-namespace-sync.sh
             volumeMounts:
-            - name: vault-role-namespace-sync-script
-              mountPath: /tmp/scripts
+            - name: vault-role-namespace-sync
+              mountPath: /tmp/scripts/vault-role-namespace-sync.sh
+              subPath: vault-role-namespace-sync.sh
           restartPolicy: OnFailure
           volumes:
-          - name: vault-role-namespace-sync-script
+          - name: vault-role-namespace-sync
             configMap:
-              name: vauilt-role-namespace-sync-script
+              name: vault-role-namespace-sync
+              defaultMode: 0755
