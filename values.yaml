@@ -38,5 +38,11 @@ cronJob:
     #!/bin/bash
     NAMESPACES=$(oc get namespaces -o name)
     for NAMESPACE in $NAMESPACES ; do
-        echo "$NAMESPACE"
+        echo "Processing $NAMESPACE..."
+        echo vault write \
+            "auth/{{ .Values.vault.authEngineName }}/role/$NAMESPACE" \
+            bound_service_account_names="default" \
+            bound_service_account_namespaces="$NAMESPACE" \
+            policies="{{ .Values.vault.policyName }}" \
+            ttl=60m
     done
