@@ -36,13 +36,15 @@ cronJob:
   schedule: "*/1 * * * *"
   script: |
     #!/bin/bash
+    AUTH_ENGINE_NAME="{{ .Values.vault.authEngineName }}"
+    POLICY_NAME="{{ .Values.vault.policyName }}"
     NAMESPACES=$(oc get namespaces -o name)
     for NAMESPACE in $NAMESPACES ; do
         echo "Processing $NAMESPACE..."
         echo vault write \
-            "auth/{{ .Values.vault.authEngineName }}/role/$NAMESPACE" \
+            "auth/$AUTH_ENGINE_NAME/role/$NAMESPACE" \
             bound_service_account_names="default" \
             bound_service_account_namespaces="$NAMESPACE" \
-            policies="{{ .Values.vault.policyName }}" \
+            policies="$POLICY_NAME" \
             ttl=60m
     done
